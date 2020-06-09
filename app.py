@@ -1,5 +1,7 @@
 # Program for Skill based Matchmaking
 
+import itertools    #for iterating and creating combinations
+
 # class for performing OOPs concepts
 class SBM:
 
@@ -19,30 +21,37 @@ class SBM:
             for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1], reverse=True):
                 print('{:15} ==> {:10d}'.format(name, score))
             print("-" * 30)
-        except Exception:
+        except Exception as e:
             print("Error encountered in output() function")
+            print(e)
+            exit()
+
+    #function to create teams for the match
+    def create_team(self):
+        # empty_list = self.player_name_with_score.keys()
+        # print(list(itertools.combinations(empty_list, self.players_on_each_side)))
+        pass
 
     # function to take inputs
     def takeinput(self):
-        try:
-            self.players_on_each_side = int(input("Enter number of players on each side: "))
-            self.total_no_of_players = self.players_on_each_side * self.players_on_each_side
-            print("Enter " + str(self.total_no_of_players) + " players names with their score")
-            count = 1
-            while True:
-                if count > self.total_no_of_players:
-                    break
 
-                name = input("Name of player " + str(count) + ": ")
-                score = int(input("Score: "))
+        self.players_on_each_side = int(input("Enter number of players on each side: "))
+        # **** Leave the player name blank when you are done adding player ****
+        print("Enter player names with their score")
+        self.total_no_of_players=1
+
+        while True:
+            try:
+                name = input("Name of player " + str(self.total_no_of_players) + ": ")
                 if name == "":
-                    print("Enter all player name to proceed.")
                     break
+                score = int(input("Score: "))
                 self.player_name_with_score[name] = score
-                count += 1
-        except Exception:
-            print("Error encountered while taking values")
-
+                self.total_no_of_players += 1
+            except Exception as e:
+                print("Error encountered while taking values")
+                print(e)
+                exit()
 
 # driver program
 if __name__ == "__main__":
@@ -50,5 +59,8 @@ if __name__ == "__main__":
         obj = SBM()
         obj.takeinput()
         obj.output()
-    except Exception:
+        obj.create_team()
+    except Exception as e:
         print("Error encountered in driver program")
+        print(e)
+        exit()
