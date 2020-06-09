@@ -13,12 +13,12 @@ class SBM:
     def output(self):
         try:
             print("Sorted List of players (best to worst):")
-            print("____________________")
-            print("Player name | Score")
-            print("--------------------")
-            for i in sorted(self.player_name_with_score.items(), reverse=True):
-                print(i[0] + " |" + str(i[1]))
-            print("--------------------")
+            print("_"*30)
+            print('{:15} ==> {:>10}'.format("Player name","Score"))
+            print("-"*30)
+            for name,score in sorted(self.player_name_with_score.items(), reverse=True):
+                print('{:15} ==> {:10d}'.format(name,score))
+            print("-"*30)
         except Exception:
             print("Error encountered in output() function")
 
