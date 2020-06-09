@@ -1,6 +1,7 @@
 # Program for Skill based Matchmaking
 
-import itertools    #for iterating and creating combinations
+import itertools  # for iterating and creating combinations
+
 
 # class for performing OOPs concepts
 class SBM:
@@ -26,19 +27,37 @@ class SBM:
             print(e)
             exit()
 
-    #function to create teams for the match
+    # function to create teams for the match
     def create_team(self):
-        # empty_list = self.player_name_with_score.keys()
-        # print(list(itertools.combinations(empty_list, self.players_on_each_side)))
-        pass
+        key_list = self.player_name_with_score.keys()
+        values = list(
+            itertools.combinations(key_list, self.players_on_each_side)
+        )  # makes different combinations of all team players
+
+        for i in range(len(values)):
+            emp = []
+            j = -1
+            while j < len(values) - 1:
+                j += 1
+                if j == i:
+                    continue
+                flag = 0
+                for value in values[i]:
+                    if value not in values[j]:
+                        flag += 1
+                    else:
+                        flag -= 1
+                if flag == self.players_on_each_side:
+                    emp.append(values[j])
+                print(emp)
 
     # function to take inputs
     def takeinput(self):
 
         self.players_on_each_side = int(input("Enter number of players on each side: "))
-        # **** Leave the player name blank when you are done adding player ****
+        print(" **** Leave the player name blank when you are done adding player **** ")
         print("Enter player names with their score")
-        self.total_no_of_players=1
+        self.total_no_of_players = 1
 
         while True:
             try:
@@ -52,6 +71,7 @@ class SBM:
                 print("Error encountered while taking values")
                 print(e)
                 exit()
+
 
 # driver program
 if __name__ == "__main__":
