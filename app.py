@@ -1,6 +1,6 @@
 # Program for Skill based Matchmaking
 
-import itertools  # for iterating and creating combinations
+import itertools  # standard library for iterating and creating combinations or permutations
 
 # class for performing OOPs concepts
 class SBM:
@@ -10,6 +10,8 @@ class SBM:
         self.player_name_with_score = {}
         self.players_on_each_side = 0
         self.total_no_of_players = 0
+        self.teamA = []
+        self.teamB = []
 
     # function to print the players in sorted order of scores
     def output(self):
@@ -18,7 +20,7 @@ class SBM:
             print("_" * 30)
             print('{:15} ==> {:>10}'.format("Player name", "Score"))
             print("-" * 30)
-            for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1], reverse=True):
+            for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1], reverse=True):         #sorting the list of players
                 print('{:15} ==> {:10d}'.format(name, score))
             print("-" * 30)
         except Exception as e:
@@ -26,10 +28,14 @@ class SBM:
             print(e)
             exit()
 
+    #function to create the matches
+    def form_matches(self):
+        pass
+
     # function to create teams for the match
     def create_team(self):
         try:
-            if self.total_no_of_players%2 == 0:
+            if self.total_no_of_players%2 == 0:         #check if teams can be formed or not
                 key_list = self.player_name_with_score.keys()
                 values = list(
                     itertools.combinations(key_list, self.players_on_each_side)
@@ -41,6 +47,7 @@ class SBM:
                     while j < len(values) - 1:
                         j += 1
                         if j == i:      #iterate and exclude the team playing in team A
+                            self.teamA.append(values[i])
                             continue
                         flag = 0
                         for value in values[i]:     #for excluding the player if present in the tuple
@@ -50,7 +57,7 @@ class SBM:
                                 flag -= 1
                         if flag == self.players_on_each_side:       #if all the players in team A not present in rest of the combinatio of teams then append
                             emp.append(values[j])
-                    print(emp)
+                    self.teamB.append(emp)
             else:
                 print("Odd no of players. Cannot make teams")
                 exit()
@@ -65,11 +72,11 @@ class SBM:
         self.players_on_each_side = int(input("Enter number of players on each side: "))
         print(" **** Leave the player name blank when you are done adding player **** ")
         print("Enter player names with their score")
-        self.total_no_of_players = 1
+        self.total_no_of_players = 0
 
         while True:
             try:
-                name = input("Name of player " + str(self.total_no_of_players) + ": ")
+                name = input("Name of player " + str(self.total_no_of_players+1) + ": ")
                 if name == "":
                     break
                 score = int(input("Score: "))
