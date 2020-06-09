@@ -1,5 +1,9 @@
 # Program for Skill based Matchmaking
 
+#function to print the players in sorted order of scores
+def output():
+    pass
+
 # function to take inputs
 def takeinput():
     try:
@@ -16,9 +20,9 @@ def takeinput():
             if (name == ""):
                 print("Enter all player name to proceed.")
                 break
-            player_name_with_score[name]=score
+            player_name_with_score[name] = score
             count += 1
-        return m, m * m,player_name_with_score
+        return m, m * m, player_name_with_score
     except Exception:
         print("Error encountered while taking values")
 
@@ -26,7 +30,6 @@ def takeinput():
 if __name__ == "__main__":
     try:
         players_on_each_side, total_no_of_players, player_name_with_score = takeinput()
-        print(players_on_each_side, total_no_of_players)
-        print(player_name_with_score)
+        output(total_no_of_players,player_name_with_score)
     except Exception:
         print("Error encountered in driver program")
