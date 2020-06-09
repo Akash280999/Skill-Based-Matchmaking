@@ -1,8 +1,14 @@
 # Program for Skill based Matchmaking
 
-#function to print the players in sorted order of scores
-def output():
-    pass
+# function to print the players in sorted order of scores
+def output(player_name_with_score):
+    print("Sorted List of players (best to worst):")
+    print("_________________")
+    print("Player name\t| Score")
+    for i in sorted(player_name_with_score.items(), reverse=True):
+        print(i[0] + "\t|" + str(i[1]))
+    print("-----------------")
+
 
 # function to take inputs
 def takeinput():
@@ -26,10 +32,11 @@ def takeinput():
     except Exception:
         print("Error encountered while taking values")
 
+
 # driver program
 if __name__ == "__main__":
     try:
         players_on_each_side, total_no_of_players, player_name_with_score = takeinput()
-        output(total_no_of_players,player_name_with_score)
+        output(player_name_with_score)
     except Exception:
         print("Error encountered in driver program")
