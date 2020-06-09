@@ -2,7 +2,6 @@
 
 import itertools  # for iterating and creating combinations
 
-
 # class for performing OOPs concepts
 class SBM:
 
@@ -29,27 +28,36 @@ class SBM:
 
     # function to create teams for the match
     def create_team(self):
-        key_list = self.player_name_with_score.keys()
-        values = list(
-            itertools.combinations(key_list, self.players_on_each_side)
-        )  # makes different combinations of all team players
+        try:
+            if self.total_no_of_players%2 == 0:
+                key_list = self.player_name_with_score.keys()
+                values = list(
+                    itertools.combinations(key_list, self.players_on_each_side)
+                )  # makes different combinations of all team players
 
-        for i in range(len(values)):
-            emp = []
-            j = -1
-            while j < len(values) - 1:
-                j += 1
-                if j == i:
-                    continue
-                flag = 0
-                for value in values[i]:
-                    if value not in values[j]:
-                        flag += 1
-                    else:
-                        flag -= 1
-                if flag == self.players_on_each_side:
-                    emp.append(values[j])
-                print(emp)
+                for i in range(len(values)):    #loop finds opponent team members
+                    emp = []    #stores all the opponent teams to be played with; matches with the player in each index in "values"
+                    j = -1
+                    while j < len(values) - 1:
+                        j += 1
+                        if j == i:      #iterate and exclude the team playing in team A
+                            continue
+                        flag = 0
+                        for value in values[i]:     #for excluding the player if present in the tuple
+                            if value not in values[j]:      #if all the current players not found in rest of the teams then increment else decrement
+                                flag += 1
+                            else:
+                                flag -= 1
+                        if flag == self.players_on_each_side:       #if all the players in team A not present in rest of the combinatio of teams then append
+                            emp.append(values[j])
+                    print(emp)
+            else:
+                print("Odd no of players. Cannot make teams")
+                exit()
+        except Exception as e:
+            print("Error encountered inside create_team()")
+            print(e)
+            exit()
 
     # function to take inputs
     def takeinput(self):
