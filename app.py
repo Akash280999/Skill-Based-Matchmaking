@@ -2,7 +2,6 @@
 
 import itertools  # standard library for iterating and creating combinations or permutations
 
-
 # class for performing OOPs concepts
 class SBM:
 
@@ -111,7 +110,7 @@ class SBM:
                     print("Number of players should be more than the no of team members. Cannot make teams")
                 else:
                     print("Odd no of players. Cannot make teams")
-                exit()
+                raise Exception
         except Exception as e:
             print("Error encountered inside create_team()")
             print(e)
@@ -119,13 +118,15 @@ class SBM:
     # function to find the quality of each match and display in sorted order
     def quality_check(self):
         try:
+            print("-" * 50)
             values = sorted(self.difference_score.items(), key=lambda item: item[1])
-            print("Sorted Order of matches based on quality:")
+            print("Sorted Order of matches to be played based on quality:")
             for value in values[:len(values)-1]:        #leaving the last element for formatting
-                print(value[0] + "=>", end="")
+                print(value[0] + " => ", end="")
             print(values[len(values)-1][0])         #prints the last element
+            print("-" * 50)
         except Exception as e:
-            print("Error encounntered in quality_check() function")
+            print("Error encountered in quality_check() function")
             print(e)
 
     # function to take inputs
@@ -139,6 +140,7 @@ class SBM:
             try:
                 name = input("Name of player " + str(self.total_no_of_players + 1) + ": ")
                 if name == "":
+                    print("\t\t\t********* End of input *********")
                     break
                 score = int(input("Score: "))
                 self.player_name_with_score[name] = score
@@ -157,10 +159,12 @@ if __name__ == "__main__":
             obj.output()
             obj.create_team()
             obj.form_matches()
-
+            obj.quality_check()
             inputt = input("Press 'Y' to exit or any other key to continue from beginning:")
             if inputt in {'y', 'Y', "Y", "y"}:
                 flag = False
         except Exception as e:
             print("Error encountered in driver program. Program starts from beginning")
             print(e)
+    else:
+        print("\t\t\t********* Thank You *********")
