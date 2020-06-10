@@ -14,6 +14,7 @@ class SBM:
         self.teamA = []
         self.teamB = []
         self.matches = {}
+        self.sorted_players = []
 
     # function to print the players in sorted order of scores
     def output(self):
@@ -25,6 +26,7 @@ class SBM:
             for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1],
                                       reverse=True):  # sorting the list of players
                 print('{:15} ==> {:10d}'.format(name, score))
+                self.sorted_players.append(name)                #creates a copy of sorted players
             print("-" * 30)
         except Exception as e:
             print("Error encountered in output() function")
@@ -50,33 +52,24 @@ class SBM:
         for key in self.teamA:  # removes duplicate matches
             if key in self.teamB:
                 index = self.teamB.index(key)
+                del self.matches[self.teamA[index]]
                 del self.teamA[index]
-                del self.matches[key]
+                del self.teamB[index]
 
-        print(self.matches)
-        print(self.teamA)
-        print(self.teamB)
-        # print("Matches played:")
-        # match = 0
-        # j = 0
-        # while j < len(self.teamA):
-        #     for lines_teamB in self.teamB[j]:
-        #         print("Match " + str(match + 1) + ": " + str(self.teamA[j]) + " vs " + str(lines_teamB))
-        #         match += 1
-        #     j += 1
-
-        # for i in self.teamB:
-        #     print(i)
-        pass
+        print("Matches played:")
+        match = 0
+        j = 0
+        while j < len(self.teamA):
+            print("Match " + str(match + 1) + ": " + str(self.teamA[j]) + " vs " + str(self.teamB[j]))
+            match += 1
+            j += 1
 
     # function to create teams for the match
     def create_team(self):
         try:
-            if (self.total_no_of_players % 2 == 0) and (
-                    self.total_no_of_players > self.players_on_each_side):  # check if teams can be formed or not
-                key_list = self.player_name_with_score.keys()
+            if (self.total_no_of_players % 2 == 0) and (self.total_no_of_players > self.players_on_each_side):  # check if teams can be formed or not
                 values = list(
-                    itertools.combinations(key_list, self.players_on_each_side)
+                    itertools.combinations(self.sorted_players, self.players_on_each_side)
                 )  # makes different combinations of all team players
 
                 for i in range(len(values)):  # loop finds opponent team members
@@ -89,8 +82,7 @@ class SBM:
                             continue
                         flag = 0
                         for value in values[i]:  # for excluding the player if present in the tuple
-                            if value not in values[
-                                j]:  # if all the current players not found in rest of the teams then increment else decrement
+                            if value not in values[j]:  # if all the current players not found in rest of the teams then increment else decrement
                                 flag += 1
                             else:
                                 flag -= 1
