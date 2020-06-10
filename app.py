@@ -71,9 +71,11 @@ class SBM:
             print("Matches played:")
             j = 0
             while j < len(self.teamA):
-                avg1 = self.find_average_score(self.teamA[j])
-                avg2 = self.find_average_score(self.teamB[j])
+                avg1 = self.find_average_score(self.teamA[j])       #calculates average score of teamA
+                avg2 = self.find_average_score(self.teamB[j])       #calculates average score of teamB
                 print("Match " + str(j + 1) + ": " + str(self.teamA[j]) + " " + str(avg1) + "  vs  " + str(self.teamB[j]) + " " + str(avg2))
+                diff = avg1 - avg2
+                self.difference_score["Match " + str(j+1)] = abs(diff)
                 j += 1
         except Exception as e:
             print("Error encountered in form_matches() function")
