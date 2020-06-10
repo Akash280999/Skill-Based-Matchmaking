@@ -34,7 +34,7 @@ class SBM(object):
             print(e)
 
     # function to find the average scores for each team in every match
-    def find_average_score(self,team):
+    def find_average_score(self, team):
         try:
             sum = 0
             for player in team:
@@ -50,7 +50,7 @@ class SBM(object):
     def form_matches(self):
         try:
             j = 0
-            while j < len(self.teamA):      # stores all the possible matches for future removal of repeating matches
+            while j < len(self.teamA):      # stores all the possible matches but still contains repeating matches of previous members who already played together
                 for lines_teamB in self.teamB[j]:
                     self.matches[self.teamA[j]] = lines_teamB       # storing all possible teams of A as a key and all possible teams of B as value
                 j += 1
@@ -77,6 +77,7 @@ class SBM(object):
                 diff = avg1 - avg2
                 self.difference_score["Match " + str(j+1)] = abs(diff)      # storing the difference as values for checking the quality of a match
                 j += 1
+            return self.difference_score
         except Exception as e:
             print("Error encountered in form_matches() function")
             print(e)
@@ -84,6 +85,8 @@ class SBM(object):
     # function to create teams for the match
     def create_team(self):
         try:
+            print("self.total_no_of_players",self.total_no_of_players)
+            print("self.players_on_each_side",self.players_on_each_side)
             # check if teams can be formed or not
             # if no of players are odd then equal teams cannot be formed
             # if no of players if less than the players on each side of the teams => teams can't be formed
@@ -111,9 +114,10 @@ class SBM(object):
                             emp.append(values[j])
                     self.teamB.append(emp)              # finally append all the possible opponent players in teamB which maps the index of each players in local variable "values"
                                                         # stores list of list
+                return self.teamA, self.teamB
             else:
-                if self.total_no_of_players >= self.players_on_each_side:
-                    print("Number of players should be more than the no of team members. Cannot make teams")
+                if self.total_no_of_players <= self.players_on_each_side:
+                    print("Number of players should be more than the no of players on each side Cannot make teams")
                 else:
                     print("Odd no of players. Cannot make teams")
                 raise Exception
@@ -166,8 +170,8 @@ if __name__ == "__main__":
             obj.players_on_each_side = int(input("Enter number of players on each side: "))
             total_no_of_players, player_name_with_score = obj.takeinput()
             sorted_players = obj.output()
-            obj.create_team()
-            obj.form_matches()
+            teamA, teamB = obj.create_team()
+            difference_score = obj.form_matches()
             obj.quality_check()
             inputt = input("Press 'Y' to exit or any other key to continue from beginning: ")
             if inputt in {'y', 'Y'}:
