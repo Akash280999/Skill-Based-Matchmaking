@@ -32,16 +32,19 @@ class SBM:
         except Exception as e:
             print("Error encountered in output() function")
             print(e)
-            exit()
 
     #function to find the average scores
     def find_average_score(self,team):
-        sum = 0
-        for player in team:
-            score = self.player_name_with_score[player]
-            sum += score
-        avg = sum / self.players_on_each_side
-        return avg
+        try:
+            sum = 0
+            for player in team:
+                score = self.player_name_with_score[player]
+                sum += score
+            avg = sum / self.players_on_each_side
+            return avg
+        except Exception as e:
+            print("Error encountered in find_average_score() function")
+            print(e)
 
     # function to create the matches
     def form_matches(self):
@@ -75,7 +78,6 @@ class SBM:
         except Exception as e:
             print("Error encountered in form_matches() function")
             print(e)
-            exit()
 
     # function to create teams for the match
     def create_team(self):
@@ -111,11 +113,9 @@ class SBM:
         except Exception as e:
             print("Error encountered inside create_team()")
             print(e)
-            exit()
 
     # function to take inputs
     def takeinput(self):
-
         self.players_on_each_side = int(input("Enter number of players on each side: "))
         print(" **** Leave the player name blank when you are done adding player **** ")
         print("Enter player names with their score")
@@ -132,18 +132,20 @@ class SBM:
             except Exception as e:
                 print("Error encountered while taking values")
                 print(e)
-                exit()
-
 
 # driver program
 if __name__ == "__main__":
-    try:
-        obj = SBM()
-        obj.takeinput()
-        obj.output()
-        obj.create_team()
-        obj.form_matches()
-    except Exception as e:
-        print("Error encountered in driver program")
-        print(e)
-        exit()
+    flag = True
+    while flag:
+        try:
+            obj = SBM()
+            obj.takeinput()
+            obj.output()
+            obj.create_team()
+            obj.form_matches()
+            inputt = input("Press 'Y' to exit or any other key to continue from beginning:")
+            if inputt in {'y', 'Y', "Y", "y"}:
+                flag = False
+        except Exception as e:
+            print("Error encountered in driver program. Program starts from beginning")
+            print(e)
