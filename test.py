@@ -64,7 +64,25 @@ class MyTestCase(unittest.TestCase):
             print(str(i) + "\t")
 
     def test_form_matches(self):
-        print(self.obj.form_matches())
+        # self.matches = {('Rishab', 'Vikash'): ('Akash', 'Sonu'), ('Rishab', 'Kartik'): ('Akash', 'Sonu'), ('Rishab', 'Rahul'): ('Akash', 'Sonu'), ('Rishab', 'Akash'): ('Rahul', 'Sonu'), ('Rishab', 'Sonu'): ('Rahul', 'Akash'), ('Vikash', 'Kartik'): ('Akash', 'Sonu'), ('Vikash', 'Rahul'): ('Akash', 'Sonu'), ('Vikash', 'Akash'): ('Rahul', 'Sonu'), ('Vikash', 'Sonu'): ('Rahul', 'Akash'), ('Kartik', 'Rahul'): ('Akash', 'Sonu'), ('Kartik', 'Akash'): ('Rahul', 'Sonu'), ('Kartik', 'Sonu'): ('Rahul', 'Akash'), ('Rahul', 'Akash'): ('Kartik', 'Sonu'), ('Rahul', 'Sonu'): ('Kartik', 'Akash'), ('Akash', 'Sonu'): ('Kartik', 'Rahul')}
+        # got the value after executing lines 52 - 56 in app.py
+        # contains all repeating matches of members who already played together with same opponent team
+
+        # function returns a dictionary of match number and its quality (closeness of two scores of two teams in a match)
+        self.assertEqual(self.obj.form_matches(), {'Match 1': 41.0, 'Match 2': 33.0, 'Match 3': 30.0, 'Match 4': 26.0, 'Match 5': 12.0, 'Match 6': 25.0, 'Match 7': 22.0, 'Match 8': 18.0, 'Match 9': 4.0, 'Match 10': 14.0, 'Match 11': 10.0, 'Match 12': 4.0})
+
+        # self.matches = {('Rishab', 'Vikash'): ('Akash', 'Sonu'), ('Rishab', 'Kartik'): ('Akash', 'Sonu'), ('Rishab', 'Rahul'): ('Akash', 'Sonu'), ('Rishab', 'Akash'): ('Rahul', 'Sonu'), ('Rishab', 'Sonu'): ('Rahul', 'Akash'), ('Vikash', 'Kartik'): ('Akash', 'Sonu'), ('Vikash', 'Rahul'): ('Akash', 'Sonu'), ('Vikash', 'Akash'): ('Rahul', 'Sonu'), ('Vikash', 'Sonu'): ('Rahul', 'Akash'), ('Kartik', 'Rahul'): ('Akash', 'Sonu'), ('Kartik', 'Akash'): ('Rahul', 'Sonu'), ('Kartik', 'Sonu'): ('Rahul', 'Akash')}
+        # got the value after executing lines 64 - 69 in app.py
+        # after removing all repeating matches of members who already played together with same opponent team
+
+    def test_find_average_score(self):
+        # should pass number of players as parameters == players_on_each_side
+        self.obj.players_on_each_side = 2
+        self.assertEqual(self.obj.find_average_score(('Kartik', 'Sonu')), 55.0)
+
+        self.obj.players_on_each_side = 3
+        self.assertEqual(self.obj.find_average_score(('Kartik', 'Sonu', 'Rahul')), 57.0)
+
 
 if __name__ == '__main__':
     unittest.main()
