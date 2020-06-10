@@ -33,36 +33,41 @@ class SBM:
             print(e)
             exit()
 
+    #function to find the average scores
+    def find_average_score(self):
+        pass
+
     # function to create the matches
     def form_matches(self):
+        try:
+            j = 0
+            while j < len(self.teamA):  # stores all the matches for future removal of repeating matches
+                for lines_teamB in self.teamB[j]:
+                    self.matches[self.teamA[j]] = lines_teamB
+                j += 1
 
-        # print(self.teamA)
-        j = 0
-        while j < len(self.teamA):  # stores all the matches for future removal of repeating match
-            for lines_teamB in self.teamB[j]:
-                self.matches[self.teamA[j]] = lines_teamB
-            j += 1
+            self.teamA = []
+            self.teamB = []
 
-        self.teamA = []
-        self.teamB = []
+            self.teamA = list(self.matches.keys())
+            self.teamB = list(self.matches.values())
 
-        self.teamA = list(self.matches.keys())
-        self.teamB = list(self.matches.values())
+            for key in self.teamA:  # removes duplicate matches
+                if key in self.teamB:
+                    index = self.teamB.index(key)
+                    del self.matches[self.teamA[index]]
+                    del self.teamA[index]
+                    del self.teamB[index]
 
-        for key in self.teamA:  # removes duplicate matches
-            if key in self.teamB:
-                index = self.teamB.index(key)
-                del self.matches[self.teamA[index]]
-                del self.teamA[index]
-                del self.teamB[index]
-
-        print("Matches played:")
-        match = 0
-        j = 0
-        while j < len(self.teamA):
-            print("Match " + str(match + 1) + ": " + str(self.teamA[j]) + " vs " + str(self.teamB[j]))
-            match += 1
-            j += 1
+            print("Matches played:")
+            j = 0
+            while j < len(self.teamA):
+                print("Match " + str(j + 1) + ": " + str(self.teamA[j]) + " vs " + str(self.teamB[j]))
+                j += 1
+        except Exception as e:
+            print("Error encountered in form_matches() function")
+            print(e)
+            exit()
 
     # function to create teams for the match
     def create_team(self):
