@@ -118,11 +118,15 @@ class SBM:
 
     # function to find the quality of each match and display in sorted order
     def quality_check(self):
-        values = sorted(self.difference_score.items(), key=lambda item: item[1])
-        print("Sorted Order of matches based on quality:")
-        for value in values[:len(values)-1]:        #leaving the last element for formatting
-            print(value[0] + "=>", end="")
-        print(values[len(values)-1][0])         #prints the last element
+        try:
+            values = sorted(self.difference_score.items(), key=lambda item: item[1])
+            print("Sorted Order of matches based on quality:")
+            for value in values[:len(values)-1]:        #leaving the last element for formatting
+                print(value[0] + "=>", end="")
+            print(values[len(values)-1][0])         #prints the last element
+        except Exception as e:
+            print("Error encounntered in quality_check() function")
+            print(e)
 
     # function to take inputs
     def takeinput(self):
