@@ -7,8 +7,12 @@ class MyTestCase(unittest.TestCase):
     def setUpClass(cls):
         cls.obj = app.SBM()
         cls.obj.players_on_each_side = 2
+        cls.obj.total_no_of_players = 6
         cls.obj.player_name_with_score = {'Akash': 57, 'Vikash': 83, 'Sonu': 43, 'Kartik': 67, 'Rishab': 99,
                                            'Rahul': 61}
+        cls.obj.sorted_players = ['Rishab', 'Vikash', 'Kartik', 'Rahul', 'Akash', 'Sonu']
+        cls.obj.teamA = [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')]
+        cls.obj.teamB = [[('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Sonu'), ('Rahul', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Sonu'), ('Rahul', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Rahul'), ('Rishab', 'Sonu'), ('Vikash', 'Rahul'), ('Vikash', 'Sonu'), ('Rahul', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Sonu'), ('Vikash', 'Kartik'), ('Vikash', 'Sonu'), ('Kartik', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Akash'), ('Vikash', 'Kartik'), ('Vikash', 'Akash'), ('Kartik', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Kartik', 'Rahul')]]
 
     def test_take_input(self):
         # for this test case user need to provide input
@@ -26,6 +30,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_output(self):
         # checks the sorted list of players w.r.t. scores (best to worst)
+        self.obj.sorted_players.clear()
         self.assertEqual(self.obj.output(), ['Rishab', 'Vikash', 'Kartik', 'Rahul', 'Akash', 'Sonu'])
 
     def test_output_2(self):
@@ -41,8 +46,25 @@ class MyTestCase(unittest.TestCase):
         self.assertRaises(TypeError, self.obj.output())
 
     def test_create_team(self):
-        # print(self.obj.player_name_with_score)
-        pass
+        # if number of players is less than players on each side
+        self.obj.players_on_each_side = 3
+        self.obj.total_no_of_players = 2
+        self.assertRaises(Exception, self.obj.create_team())
+
+        # if number of players is odd
+        self.obj.total_no_of_players = 5
+        self.assertRaises(Exception, self.obj.create_team())
+
+    def test_create_team_2(self):
+        # teamA and teamB has all the repeating teams at this point of time
+        self.assertEqual(self.obj.create_team(), (self.obj.teamA, self.obj.teamB))
+        print("Team A =", self.obj.teamA)
+        print("Team B = ", end="")
+        for i in self.obj.teamB:
+            print(str(i) + "\t")
+
+    def test_form_matches(self):
+        print(self.obj.form_matches())
 
 if __name__ == '__main__':
     unittest.main()
