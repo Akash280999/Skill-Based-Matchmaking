@@ -30,12 +30,16 @@ class SBM:
 
     #function to create the matches
     def form_matches(self):
+        print(self.teamA)
+        for line in itertools.islice(self.teamA, 0, len(self.teamA)//2):
+            print(line)
+        print(self.teamB)
         pass
 
     # function to create teams for the match
     def create_team(self):
         try:
-            if self.total_no_of_players%2 == 0:         #check if teams can be formed or not
+            if (self.total_no_of_players%2 == 0) and (self.total_no_of_players > self.players_on_each_side):         #check if teams can be formed or not
                 key_list = self.player_name_with_score.keys()
                 values = list(
                     itertools.combinations(key_list, self.players_on_each_side)
@@ -59,7 +63,10 @@ class SBM:
                             emp.append(values[j])
                     self.teamB.append(emp)
             else:
-                print("Odd no of players. Cannot make teams")
+                if self.total_no_of_players >= self.players_on_each_side:
+                    print("Number of players should be more than the no of team members. Cannot make teams")
+                else:
+                    print("Odd no of players. Cannot make teams")
                 exit()
         except Exception as e:
             print("Error encountered inside create_team()")
@@ -95,6 +102,7 @@ if __name__ == "__main__":
         obj.takeinput()
         obj.output()
         obj.create_team()
+        obj.form_matches()
     except Exception as e:
         print("Error encountered in driver program")
         print(e)
