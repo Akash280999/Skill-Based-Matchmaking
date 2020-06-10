@@ -3,7 +3,7 @@
 import itertools  # standard library for iterating and creating combinations or permutations
 
 # class for performing OOPs concepts
-class SBM:
+class SBM(object):
 
     # constructor for pre initialization
     def __init__(self):
@@ -28,6 +28,7 @@ class SBM:
                 print('{:15} ==> {:10d}'.format(name, score))
                 self.sorted_players.append(name)
             print("-" * 30)
+            return self.sorted_players
         except Exception as e:
             print("Error encountered in output() function")
             print(e)
@@ -128,7 +129,7 @@ class SBM:
                                                                                             # returns a list of tuples
             print("Sorted Order of matches to be played based on quality:")
             for value in values[:len(values)-1]:        # leaving the last element for formatting
-                print(value[0] + " => ", end="")
+                print(value[0] + " , ", end="")
             print(values[len(values)-1][0])         # prints the last element
             print("-" * 50)
         except Exception as e:
@@ -137,7 +138,7 @@ class SBM:
 
     # function to take inputs
     def takeinput(self):
-        self.players_on_each_side = int(input("Enter number of players on each side: "))
+
         print(" **** Leave the player name blank when you are done adding player **** ")
         print("\nEnter player names with their score")
         self.total_no_of_players = 0
@@ -147,7 +148,7 @@ class SBM:
                 name = input("Name of player " + str(self.total_no_of_players + 1) + ": ")
                 if name == "":            # stops taking any futher inputs when blank encountered and terminates the loop
                     print("\t\t\t********* End of input *********")
-                    break
+                    return self.total_no_of_players, self.player_name_with_score
                 score = int(input("Score: "))
                 self.player_name_with_score[name] = score
                 self.total_no_of_players += 1              # counts the total players each time user gives input
@@ -161,12 +162,14 @@ if __name__ == "__main__":
     while flag:
         try:
             obj = SBM()
-            obj.takeinput()
-            obj.output()
+            # creating local copies of variables for testcases
+            obj.players_on_each_side = int(input("Enter number of players on each side: "))
+            total_no_of_players, player_name_with_score = obj.takeinput()
+            sorted_players = obj.output()
             obj.create_team()
             obj.form_matches()
             obj.quality_check()
-            inputt = input("Press 'Y' to exit or any other key to continue from beginning:")
+            inputt = input("Press 'Y' to exit or any other key to continue from beginning: ")
             if inputt in {'y', 'Y'}:
                 flag = False
         except Exception as e:
