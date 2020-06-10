@@ -13,6 +13,7 @@ class MyTestCase(unittest.TestCase):
         cls.obj.sorted_players = ['Rishab', 'Vikash', 'Kartik', 'Rahul', 'Akash', 'Sonu']
         cls.obj.teamA = [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')]
         cls.obj.teamB = [[('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Akash', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Sonu'), ('Rahul', 'Sonu')], [('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Rahul', 'Akash'), ('Rahul', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Kartik', 'Akash'), ('Kartik', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Sonu'), ('Kartik', 'Rahul'), ('Kartik', 'Sonu'), ('Rahul', 'Sonu')], [('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Kartik', 'Rahul'), ('Kartik', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Akash'), ('Rishab', 'Sonu'), ('Vikash', 'Akash'), ('Vikash', 'Sonu'), ('Akash', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Rahul'), ('Rishab', 'Sonu'), ('Vikash', 'Rahul'), ('Vikash', 'Sonu'), ('Rahul', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Rahul'), ('Rishab', 'Akash'), ('Vikash', 'Rahul'), ('Vikash', 'Akash'), ('Rahul', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Sonu'), ('Vikash', 'Kartik'), ('Vikash', 'Sonu'), ('Kartik', 'Sonu')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Akash'), ('Vikash', 'Kartik'), ('Vikash', 'Akash'), ('Kartik', 'Akash')], [('Rishab', 'Vikash'), ('Rishab', 'Kartik'), ('Rishab', 'Rahul'), ('Vikash', 'Kartik'), ('Vikash', 'Rahul'), ('Kartik', 'Rahul')]]
+        cls.obj.difference_score = {'Match 1': 41.0, 'Match 2': 33.0, 'Match 3': 30.0, 'Match 4': 26.0, 'Match 5': 12.0, 'Match 6': 25.0, 'Match 7': 22.0, 'Match 8': 18.0, 'Match 9': 4.0, 'Match 10': 14.0, 'Match 11': 10.0, 'Match 12': 4.0}
 
     def test_take_input(self):
         # for this test case user need to provide input
@@ -83,6 +84,11 @@ class MyTestCase(unittest.TestCase):
         self.obj.players_on_each_side = 3
         self.assertEqual(self.obj.find_average_score(('Kartik', 'Sonu', 'Rahul')), 57.0)
 
+    def test_quality_check(self):
+        self.assertEqual(self.obj.quality_check(), None)
+
+        self.obj.difference_score = {}
+        self.assertRaises(Exception, self.obj.quality_check())
 
 if __name__ == '__main__':
     unittest.main()
