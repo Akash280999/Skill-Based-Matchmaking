@@ -15,6 +15,7 @@ class SBM:
         self.teamB = []
         self.matches = {}
         self.sorted_players = []
+        self.difference_score = {}
 
     # function to print the players in sorted order of scores
     def output(self):
@@ -34,8 +35,13 @@ class SBM:
             exit()
 
     #function to find the average scores
-    def find_average_score(self):
-        pass
+    def find_average_score(self,team):
+        sum = 0
+        for player in team:
+            score = self.player_name_with_score[player]
+            sum += score
+        avg = sum / self.players_on_each_side
+        return avg
 
     # function to create the matches
     def form_matches(self):
@@ -62,7 +68,9 @@ class SBM:
             print("Matches played:")
             j = 0
             while j < len(self.teamA):
-                print("Match " + str(j + 1) + ": " + str(self.teamA[j]) + " vs " + str(self.teamB[j]))
+                avg1 = self.find_average_score(self.teamA[j])
+                avg2 = self.find_average_score(self.teamB[j])
+                print("Match " + str(j + 1) + ": " + str(self.teamA[j]) + " " + str(avg1) + "  vs  " + str(self.teamB[j]) + " " + str(avg2))
                 j += 1
         except Exception as e:
             print("Error encountered in form_matches() function")
