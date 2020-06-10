@@ -2,6 +2,7 @@
 
 import itertools  # standard library for iterating and creating combinations or permutations
 
+
 # class for performing OOPs concepts
 class SBM:
 
@@ -12,6 +13,7 @@ class SBM:
         self.total_no_of_players = 0
         self.teamA = []
         self.teamB = []
+        self.matches = {}
 
     # function to print the players in sorted order of scores
     def output(self):
@@ -20,7 +22,8 @@ class SBM:
             print("_" * 30)
             print('{:15} ==> {:>10}'.format("Player name", "Score"))
             print("-" * 30)
-            for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1], reverse=True):         #sorting the list of players
+            for name, score in sorted(self.player_name_with_score.items(), key=lambda item: item[1],
+                                      reverse=True):  # sorting the list of players
                 print('{:15} ==> {:10d}'.format(name, score))
             print("-" * 30)
         except Exception as e:
@@ -28,38 +31,70 @@ class SBM:
             print(e)
             exit()
 
-    #function to create the matches
+    # function to create the matches
     def form_matches(self):
+
+        # print(self.teamA)
+        j = 0
+        while j < len(self.teamA):  # stores all the matches for future removal of repeating match
+            for lines_teamB in self.teamB[j]:
+                self.matches[self.teamA[j]] = lines_teamB
+            j += 1
+
+        self.teamA = []
+        self.teamB = []
+
+        self.teamA = list(self.matches.keys())
+        self.teamB = list(self.matches.values())
+
+        for key in self.teamA:  # removes duplicate matches
+            if key in self.teamB:
+                index = self.teamB.index(key)
+                del self.teamA[index]
+                del self.matches[key]
+
+        print(self.matches)
         print(self.teamA)
-        for line in itertools.islice(self.teamA, 0, len(self.teamA)//2):
-            print(line)
         print(self.teamB)
+        # print("Matches played:")
+        # match = 0
+        # j = 0
+        # while j < len(self.teamA):
+        #     for lines_teamB in self.teamB[j]:
+        #         print("Match " + str(match + 1) + ": " + str(self.teamA[j]) + " vs " + str(lines_teamB))
+        #         match += 1
+        #     j += 1
+
+        # for i in self.teamB:
+        #     print(i)
         pass
 
     # function to create teams for the match
     def create_team(self):
         try:
-            if (self.total_no_of_players%2 == 0) and (self.total_no_of_players > self.players_on_each_side):         #check if teams can be formed or not
+            if (self.total_no_of_players % 2 == 0) and (
+                    self.total_no_of_players > self.players_on_each_side):  # check if teams can be formed or not
                 key_list = self.player_name_with_score.keys()
                 values = list(
                     itertools.combinations(key_list, self.players_on_each_side)
                 )  # makes different combinations of all team players
 
-                for i in range(len(values)):    #loop finds opponent team members
-                    emp = []    #stores all the opponent teams to be played with; matches with the player in each index in "values"
+                for i in range(len(values)):  # loop finds opponent team members
+                    emp = []  # stores all the opponent teams to be played with; matches with the player in each index in "values"
                     j = -1
                     while j < len(values) - 1:
                         j += 1
-                        if j == i:      #iterate and exclude the team playing in team A
+                        if j == i:  # iterate and exclude the team playing in team A
                             self.teamA.append(values[i])
                             continue
                         flag = 0
-                        for value in values[i]:     #for excluding the player if present in the tuple
-                            if value not in values[j]:      #if all the current players not found in rest of the teams then increment else decrement
+                        for value in values[i]:  # for excluding the player if present in the tuple
+                            if value not in values[
+                                j]:  # if all the current players not found in rest of the teams then increment else decrement
                                 flag += 1
                             else:
                                 flag -= 1
-                        if flag == self.players_on_each_side:       #if all the players in team A not present in rest of the combinatio of teams then append
+                        if flag == self.players_on_each_side:  # if all the players in team A not present in rest of the combinatio of teams then append
                             emp.append(values[j])
                     self.teamB.append(emp)
             else:
@@ -83,7 +118,7 @@ class SBM:
 
         while True:
             try:
-                name = input("Name of player " + str(self.total_no_of_players+1) + ": ")
+                name = input("Name of player " + str(self.total_no_of_players + 1) + ": ")
                 if name == "":
                     break
                 score = int(input("Score: "))
