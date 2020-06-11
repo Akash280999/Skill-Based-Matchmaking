@@ -17,14 +17,14 @@
 ### Start virtualenv
 
 ```
-> virtualenv -p python3.8 venv 
-> source venv/bin/activate
+$ virtualenv -p python3.8 venv 
+$ source venv/bin/activate
 ```
 
 ### Run the code 
 * Main script
 ```
-python app.py
+$ python app.py
 ```
 * <p>Test cases (it is advised to run the test cases one at a time).<p></p>
 Used ```unittest``` library for testing.
@@ -36,11 +36,14 @@ Run for validating:
 
 > python -m unittest test.MyTestCase.'any_test_case_name'
 ```
-> python -m unittest test.MyTestCase.test_take_input
-> python -m unittest test.MyTestCase.test_take_input_no_of_players
+$ python -m unittest test.MyTestCase.test_take_input
+$ python -m unittest test.MyTestCase.test_take_input_no_of_players
 ...
 ```
-
+* See commits history :
+```
+$ git log
+```
 ## Versioning
 
 I used [Git](https://git-scm.com/) for versioning.
